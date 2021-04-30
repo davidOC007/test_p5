@@ -4,6 +4,8 @@
 const affichagePanier = document.getElementById("panierachat") //récupération id=panierachat
 let panier = JSON.parse(localStorage.getItem("monPanier")); // variable panier
 let total; //variable panier
+let prixTotal = document.getElementsByClassName('prix-total')[0];
+
 
 
 if (panier.length > 0) {
@@ -118,12 +120,131 @@ let prixTotal = document.getElementsByClassName('prix-total')[0];
 
 // méthode pour valider le panier et passer la commande 
 
-let products = [] //initialisation de l'objet qui va contenir les id des produits 
-for (let i=0; i< panier.length; i++){ //boucle pour recuperer les id 
-    products.push(panier[i].id) //envoie des id dans la variable products
-};
+// FORMULAIRE
+let EnregistrementPrixTotal = prixTotal.innerText;
+let form = document.getElementById("form");
 
-//initialisation de la variable envoyée lors de la commande avec les infos utilisateur et produits
+let firstName = document.getElementById("firstName");
+let lastName = document.getElementById("lastName");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let email = document.getElementById("email");
+
+let indication = document.getElementById("indication");
+indication.className = "text-center mt-2";
+let btnEnvoiForm = document.getElementById("btn_envoi_form");
+
+// REGEX vérifications
+let RegexLettre = /^[a-zA-ZÀ-ÿ-\s]+$/;
+let RegexLettreNombre = /^[a-zA-ZÀ-ÿ-0-9-\s]+$/;
+let RegexLettreNombreVirgule = /^[a-zA-ZÀ-ÿ-0-9-\s,']+$/;
+
+// Conditions de validation des champs du formulaire 
+form.addEventListener("submit", function(event) {
+    if(RegexLettre.test(firstName.value) == false) {
+        event.preventDefault();
+        document.getElementById("invalid_firstname").innerHTML = "Veuillez saisir un prénom valide";
+        
+    } else if (RegexLettre.test(lastName.value) == false) {
+        event.preventDefault();
+        document.getElementById("invalid_lastname").innerHTML = "Veuillez saisir un nom valide";
+
+    } else if (RegexLettreNombreVirgule.test(address.value) == false) {
+        event.preventDefault();
+        document.getElementById("invalid_address").innerHTML = "Veuillez saisir une adresse valide";
+
+        
+    } else if (RegexLettre.test(city.value) == false) {
+        event.preventDefault();
+        document.getElementById("invalid_city").innerHTML = "Veuillez saisir un nom de ville valide";
+           
+    } else if (email.value == "") {
+            event.preventDefault();
+            document.getElementById("invalid_email").innerHTML = "Veuillez saisir une adresse mail valide";
+            
+    // Validation du panier
+    } else if (panier < 1 || panier == null) {
+        event.preventDefault();
+        alert("Votre panier est vide");
+        return false;
+    } else {
+        event.preventDefault();
+        // ENREGISTREMENT DU FORMULAIRE DANS L'API
+        // Récupération id produits sous forme de tableau
+        let products = [];
+        for (var i = 0; i < panier.length; i++) {
+            products.push(panier[i].id);
+        };
+
+        //Objet contact
+        let contact = {
+            firstName : firstName.value,
+            lastName : lastName.value,
+            address : address.value,
+            city :  city.value,
+            email : email.value,
+        };
+
+        // Les infos à envoyer dans l'API
+        let envoiInfos = JSON.stringify({
+                contact,
+                products,
+        });
+
+        // ENVOI DANS L'API CAMERAS/ORDER
+        const envoiApi = () => {
+            const options = {
+                method: "POST",
+                body: envoiInfos,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+
+            fetch("http://localhost:3000/api/cameras/order", options)
+                .then(response => response.json())
+                .then( response => {
+                    localStorage.setItem("Order Id", JSON.stringify(response.orderId));
+                    localStorage.setItem("Contact", JSON.stringify(response.contact));
+                    localStorage.setItem("Prix Total", JSON.stringify(EnregistrementPrixTotal));
+                    localStorage.removeItem("monPanier");
+                    window.location.replace("confirmation.html");
+                })
+                .catch((error) => console.log(error));
+        } ;
+        envoiApi();
+    };
+});
+
+
+
+/*
+        //Récupération des champs
+       
+
+let firstName = document.getElementById("firstName");
+const nomValide = document.getElementById("code-validation");
+// On crée un "écouteur d'événement sur chaque input qui va vérifier si le texte saisie dans l'input "code" commence bien par "CODE-"
+code.addEventListener('input', (firstName) => {
+// On crée une règle RegExp avec la string obligatoire en début d'input
+const codeRgex = RegExp(/^CODE-/);
+// On créer une variable qui va vérifier si le paramètre (code) de notre fonction répond à la règle fixée par la RegExp
+let codeResult = codeRgex.test(firstName.target.value);
+
+// Si le résultat de notre constante "code" commence par "CODE-"
+if (codeResult === true) {
+// Alors un texte "Code valide" s'affiche dans la zone "code-validation"
+nomValide.innerHTML = 'Code valide';
+} else {
+// Sinon le texte affiche "Code invalide", le bouton reste grisé
+nomValide.innerHTML = 'Code invalide';
+}
+});
+
+
+       
+  
+    //initialisation de la variable envoyée lors de la commande avec les infos utilisateur et produits
 const commandeUser = {
     contact: {},
     products: products,
@@ -131,29 +252,28 @@ const commandeUser = {
 
 const urlOrder = 'http://localhost:3000/api/cameras/order' // création de la variable pour relier à l'API
 
+
 document.getElementById("formulaire").addEventListener("submit", function (e){
     e.preventDefault();
+
+    
 
     //Avant d'envoyer un formulaire, vérification que le panier n'est pas vide.
     if (panier.length < 1){
         alert("Attention, votre panier est vide.");
     }
     else {
-        //Récupération des champs
-        let nomForm = document.getElementById("nom").value;
-        let prenomForm = document.getElementById("prénom").value;
-        let emailForm = document.getElementById("email").value;
-        let adresseForm = document.getElementById("adresse").value;
-        let villeForm = document.getElementById("ville").value;
 
         //Création de l'objet formulaireObjet
         commandeUser.contact = {
-            firstName: prenomForm,
-            lastName: nomForm,  
-            address: adresseForm,
-            city: villeForm,
-            email: emailForm
-        }    
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,  
+            address: document.getElementById("address").value,
+            city: document.getElementById("city").value,
+            email: document.getElementById("email").value
+        }  
+        
+        
         //Envoi des données récupérées
         const optionsFetch = {
             headers:{
@@ -173,6 +293,6 @@ document.getElementById("formulaire").addEventListener("submit", function (e){
     }
 })
 
-
+*/
 
 

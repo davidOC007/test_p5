@@ -38,34 +38,45 @@
 			</div>
 			<div class="m-2" id="formulaire">
 				<p>Veuillez remplir ce formulaire afin d'effectuer le paiement de votre commande.</p>
-				<form class="col mb-5" id="form" method="POST" action="traitement.php">
-					<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="prénom">Prénom</label>
-						<input type="text" class="form-control"  name="prénom" id="prénom" placeholder="Ex : Jean" required pattern="[a-zA-ZÀ-ú\-\s]*">
+				<!-- FORMULAIRE -->
+				<h2 class="mt-5 mb-3">Formulaire à remplir :</h2>
+				<section class="row" id="formulaire">
+				  <form class="col mb-5" id="form" method="POST" action="traitement.php">
+					  <div class="form-row">
+						<div class="form-group col-md-6">
+						  <label for="firstName">Prénom : </label>
+						  <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Votre prénom" required>
+						  <small id="invalid_firstname"></small>
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="lastName">Nom : </label>
+						  <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Votre nom" required>
+						  <small id="invalid_lastname"></small>
+						</div>
 					  </div>
-					  <div class="form-group col-md-6">
-						<label for="nom">Nom</label>
-						<input type="text" class="form-control" name="nom" id="nom" placeholder="Ex : Dupond" required pattern="[a-zA-ZÀ-ú\-\s]*">
+					  <div class="form-row">
+						<div class="form-group col-md-6">
+						  <label for="address">Adresse : </label>
+						  <input type="text" name="address" class="form-control" id="address" placeholder="Votre adresse" required>
+						  <small id="invalid_address"></small>
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="city">Ville : </label>
+						  <input type="text" name="ville" class="form-control" id="city" placeholder="Ville" required>
+						  <small id="invalid_city"></small>
+						</div>
 					  </div>
-					  <div class="form-group col-md-6">
-						<label for="adresse">Adresse</label>
-						<input type="text" class="form-control" name="adresse" id="adresse" placeholder="Ex : 9 rue des plantes" required pattern="[a-zA-Z0-9 /\\@#$%&]+">
+					  <div class="form-row">
+						<div class="form-group col-md-12">
+						  <label for="email">E-mail : </label>
+						  <input type="email" class="form-control" id="email" placeholder="Votre email" required>
+						  <small id="invalid_email"></small>
+						</div>
 					  </div>
-					  <div class="form-group col-md-6">
-						<label for="ville">Ville</label>
-						<input type="text" class="form-control" name="ville" id="ville" placeholder="Ex : Reims" required pattern="[a-zA-Z0-9' /\\@#$%&]+">
-					  </div>
-					  <div class="form-group col-md-6">
-						<label for="email">Email address</label>
-						<input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ex : jeandupond@mail.fr" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-						
-					  </div>
-					</div>
-					  
-					  
-					<button type="submit" class="btn btn-secondary" id="formbutton">Je commande</button>
+					  <button type="submit" id="btn_envoi_form" class="btn-dark rounded-0 btn_center">Envoyer</button>
+					  <p id="indication"></p>
 				  </form>
+				</section>
 			</div>
 	
 	

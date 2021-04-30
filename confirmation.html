@@ -22,26 +22,25 @@
       </ul>
   </header>
 
-            <!-- Main / confirmation de la commande utilisateur-->
-    <main>
-        <div class="container" id="Containerconfirmation">
-              <div class="row">
-                  <div class="col mt-4 mb-4">
-                      <h1 class="text-center" id="h1confirmation">Confirmation de votre commande</h1>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-                      <div id="Sectionconfirmation">
-                          <p>Bonjour <span id="nomcommande"></span>,</p><br />
-                          <p>Merci d'avoir commandé chez Orinoco ! Le prix total de votre panier est de <span id="prixcommande"></span> €.</p><br />
-                          <p>Voici le numéro de votre commande: <span id="idcommande"></span></p><br />
-                          <p>Merci de bien vouloir le conserver. Nous espérons vous revoir prochainement et vous remercions pour votre confiance.</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </main>
+             <!-- CONFIRMATION -->
+    <main class="hero container-fluid">
+      <section class="row align-items-center img_home_parallax">
+        <div class="col-sm-12">
+          <h1 class="text-center display-4" id="felicitations"></h1>
+        </div>
+      </section>
+      <section class="container">
+        <div class="col text-center border px-3 py-3 my-5">
+          <h2 class="h3 my-5" id="commande_valide"></h2>
+          <h3 class="h4 my-5" id="prix_total"></h3>
+          <p class="h5 mt-5">Votre colis vous sera envoyé à l'adresse :</p>
+          <p class="h5 mt-3 mb-5" id="adresse"></p>
+
+          <p id="mail_confirmation"></p>
+          <p class="h3">Orinoco vous remercie pour votre commande. À très bientôt sur notre site !</p>
+        </div>
+      </section>
+    </main>
 		<!-- FOOTER -->
 		<footer class="container-fluid bg-dark py-4">
 			<ul class="nav justify-content-md-center">

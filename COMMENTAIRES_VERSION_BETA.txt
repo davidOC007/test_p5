@@ -1,0 +1,69 @@
+Appel API JS73
+
+Je déclare une variable me permettant de récupére l'id du DOM
+Je récupère les données avec fetch et l'adresse API
+J'utilise la méthode then pour les promesses, fonction fléchée pour les callbacks
+Je mets la réponse (la console log nous donne les infos)
+J'affiche les infos avec une const et méthode JSOn pour obtenir le contenu (mes 5 éléments)
+
+La méthode forEach() permet d'exécuter une fonction donnée sur chaque élément du tableau
+----------------------------------
+<a href="produit.html?id=
+Le point d'interrogation permet d'afficher une paire clé/valeur (?clé=valeur)
+Je transfère l'identifiant du produit sélectionné
+
+---------------------
+Page produit
+
+Réupération de la chaîne de requête dans l'URL
+
+window.location   ----> récupère/définit l'emplacement, ou l'URL en cours, de l'objet de la fenêtre
+search  ------->  la partie de l'URL qui suit le symbole "?", avec ce symbole inclus
+
+Utilisation de l'interface URLSearchParams (pour extraire l'id)
+Elle définit des méthodes utilitaires pour travailler avec la chaîne de requête (les paramètres GET) d'une URL.
+
+URLSearchParams.get()
+retourne la première valeur associée au paramètre de recherche donné
+
+(possibilité d'utiliser la méthode slice pour extraire l'id)
+const queryString_url_id = window.location.search;
+const leId = queryString_url_id.slice(4);  (indiquer un nombre pour couper et récuperer l'id seul...)
+
+-----------------------------
+Boucle for
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Le formulaire s'adapte au nombre d'options qu'il y a dans l'objet du produit
+
+const optionQuantite = idProduitSelectionneroptions;
+let structureOptions = [];
+
+// La boucle for pour afficher toutes les options du produit
+for (let i = 0; i < optionQuantite.length; i++) {
+	structureOptions =
+	  structureOptions +
+                      `
+	<option value="${i}">$optionQuantite[i]}</option>
+	`;
+	}
+
+---------------------------------------------------------------------------------------
+JS82  Le localStorage (données persistantes)  Les clés et les valeurs sont toujours des chaînes de caractère
+S'assurer que la clé n'existe pas déjà
+JSON est une syntaxe pour sérialiser des objets, tableaux, nombres, chaînes de caractères, booléens et valeur null.
+(méthode parse (pour aller du format JSON à l'objet,  et stringify (pour aller de l'objet js au format JSON)
+
+// Déclaration de la variable "produitEnregistreDansLocalStorage" dans laquelle on met les clés et les valeurs qui sont dans le local storage
+
+let produitenregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
+(vérifier s'il n'y existe pas déjà qqch, aller lire la clé)
+/: JSON.parse c'est pour convertir les données qu format JSON qui sont dans le local storage en objet JS
+
+2 cas à gérer : s'il y a au nom la présence du panier
+
+
+
+
+
+
